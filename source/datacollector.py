@@ -27,6 +27,7 @@ class DataCollector:
         self.fileloc = fileloc
         self.device_index = device_index
         self.frame_shape = self.get_webcam_shape()
+        print(self.frame_shape)
 
     def get_webcam_shape(self):
         '''Gets the shape of frames produced by webcam'''

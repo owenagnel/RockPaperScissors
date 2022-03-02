@@ -12,6 +12,7 @@ NUM_CLASSES = 3
 NUM_EPOCHS = 10
 BATCH_SIZE = 4
 LEARNING_RATE = 0.001
+DEPTH = 2
 #NUM_WORKERS = 1  kind of annoying creates errors on my machine when passed to data loader
 
 # Initialise dataset and split into train and test sets
@@ -29,24 +30,30 @@ testset_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE,
 
 
 # Model
-class GestureClassifier(nn.Module):
-    '''Basic FFN classifier neural net'''
-    def __init__(self, input_size, hidden, classes):
-        super(GestureClassifier, self).__init__()
-        self.lin_1 = nn.Linear(input_size, hidden)
-        self.relu = nn.ReLU()
-        self.lin_2 = nn.Linear(hidden, classes)
 
-    def forward(self, sample):
-        '''inputs x to the model'''
-        out = self.lin_1(sample)
-        out = self.relu(out)
-        out = self.lin_2(out)
+class FeedForward(nn.Module):
+    '''Basic FFN classifier neural net'''
+    def __init__(self, in_size, out_size, hidden_layer_size=250, depth = 2):
+        nn.Module.__init__(self)
+        self.in_layer = nn.Sequential(nn.Linear(in_size, hidden_layer_size, bias=False), nn.ReLU())
+        self.hidden_layers = nn.ModuleList()
+        for _ in range(depth-2):
+            self.hidden_layers += [nn.Linear(hidden_layer_size,hidden_layer_size), nn.ReLU()]
+
+        self.out_layer = nn.Sequential(nn.Linear(hidden_layer_size, out_size, bias=False))
+
+    def forward(self, x):
+        '''feed x into the model'''
+        out = self.in_layer(x)
+        for hidden_layer in self.hidden_layers:
+            out = hidden_layer(out)
+        out = self.out_layer(out)
+
         return out
 
 def get_classifier():
     '''Gives a classifier of correct specs'''
-    return GestureClassifier(INPUT_SIZE, HIDDEN_SIZE, NUM_CLASSES)
+    return FeedForward(INPUT_SIZE, NUM_CLASSES, HIDDEN_SIZE, DEPTH)
 
 # loss, optimizer, and model
 model = get_classifier()
