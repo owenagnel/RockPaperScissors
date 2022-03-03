@@ -37,9 +37,9 @@ class HandDetector():
                 if drawhands:
                     self.mp_drawing.draw_landmarks(image_bgr,
                             hand, self.mp_hands.HAND_CONNECTIONS,
-                            self.mp_drawing.DrawingSpec(color=(121, 22, 76),
+                            self.mp_drawing.DrawingSpec(color=(100, 100, 100),
                                                         thickness=2, circle_radius=4),
-                            self.mp_drawing.DrawingSpec(color=(250, 44, 250),
+                            self.mp_drawing.DrawingSpec(color=(51, 50, 50),
                                                         thickness=2, circle_radius=2),
                             )
         return image_bgr

@@ -1,4 +1,4 @@
-'''Class to draw game graphics onto screen'''
+'''A horrible python mess to draw basic game graphics onto screen'''
 import cv2
 import cvzone
 
@@ -8,27 +8,6 @@ paper = cv2.imread("graphics/RockPaperScissorSeq/Paper.png", cv2.IMREAD_UNCHANGE
 blank = cv2.imread("graphics/RockPaperScissorSeq/Blank.png", cv2.IMREAD_UNCHANGED)
 shoot = cv2.imread("graphics/RockPaperScissorSeq/Shoot.png", cv2.IMREAD_UNCHANGED)
 play_again = cv2.imread("graphics/PlayAgain.png", cv2.IMREAD_UNCHANGED)
-
-def get_start_seq():
-    return [blank, rock, blank, paper, blank, scissor, blank, shoot]
-
-def get_ready():
-    return cv2.imread("graphics/Ready.png", cv2.IMREAD_UNCHANGED)
-
-locations = {
-    "c1" : "graphics/scores/Comp1.png",
-    "c2" : "graphics/scores/Comp2.png",
-    "c3" : "graphics/scores/Comp3.png",
-    "p1" : "graphics/scores/Player1.png",
-    "p2" : "graphics/scores/Player2.png",
-    "p3" : "graphics/scores/player3.png",
-    "cr" : "graphics/Choices/CompRock.png",
-    "cp" : "graphics/Choices/CompPaper.png",
-    "cs" : "graphics/Choices/CompScissor.png",
-    "pr" : "graphics/Choices/PlayerRock.png",
-    "pp" : "graphics/Choices/PlayerPaper.png",
-    "ps" : "graphics/Choices/PlayerScissor.png"
-}
 
 player_choices = {
     0 : "pr",
@@ -50,6 +29,51 @@ comp_scores = {
     2 : "c2",
     3 : "c3"
 }
+
+def get_start_seq():
+    return [blank, rock, blank, paper, blank, scissor, blank, shoot]
+
+def get_ready():
+    return cv2.imread("graphics/Ready.png", cv2.IMREAD_UNCHANGED)
+
+
+plays = {
+    "pr" : "graphics/Choices/comprockvs.png",
+    "pp" : "graphics/Choices/comppapervs.png",
+    "ps" : "graphics/Choices/compscissorvs.png",
+    "cr" : "graphics/Choices/playerrockvs.png",
+    "cp" : "graphics/Choices/playerpapervs.png",
+    "cs" : "graphics/Choices/playerscissorvs.png"
+}
+def result(comp_ges, play_ges):
+    out = []
+    computer = cv2.imread(plays[comp_choices[comp_ges]], cv2.IMREAD_UNCHANGED)
+    out.append(computer)
+    computer2 = cv2.imread(plays[comp_choices[comp_ges]], cv2.IMREAD_UNCHANGED)
+    player = cv2.imread(plays[player_choices[play_ges]], cv2.IMREAD_UNCHANGED)
+    player = cvzone.overlayPNG(computer2, player, [0,0])
+    out.append(player)
+    return out
+
+
+
+
+locations = {
+    "c1" : "graphics/scores/Comp1.png",
+    "c2" : "graphics/scores/Comp2.png",
+    "c3" : "graphics/scores/Comp3.png",
+    "p1" : "graphics/scores/Player1.png",
+    "p2" : "graphics/scores/Player2.png",
+    "p3" : "graphics/scores/player3.png",
+    "cr" : "graphics/Choices/CompRock.png",
+    "cp" : "graphics/Choices/CompPaper.png",
+    "cs" : "graphics/Choices/CompScissor.png",
+    "pr" : "graphics/Choices/PlayerRock.png",
+    "pp" : "graphics/Choices/PlayerPaper.png",
+    "ps" : "graphics/Choices/PlayerScissor.png"
+}
+
+
 
 def get_main(image, comp_score, player_score, comp_gesture, player_gesture):
     main = cv2.imread("graphics/Mainscreen.png", cv2.IMREAD_UNCHANGED)
