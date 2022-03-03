@@ -2,5 +2,3 @@ env/
 .DS_Store
 source/__pycache__
 deprecated/
-source/data
-source/model
