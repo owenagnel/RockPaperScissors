@@ -6,13 +6,13 @@ from torch.utils.data import random_split, DataLoader
 # pylint: disable=E1101
 
 # hyper parameters
-HIDDEN_SIZE = 150
+HIDDEN_SIZE = 250
 INPUT_SIZE = 21 * 3
 NUM_CLASSES = 3
-NUM_EPOCHS = 15
+NUM_EPOCHS = 50
 BATCH_SIZE = 10
 LEARNING_RATE = 0.001
-DEPTH = 3
+DEPTH = 9
 #NUM_WORKERS = 1  kind of annoying creates errors on my machine when passed to data loader
 
 # Initialise dataset and split into train and test sets
