@@ -70,6 +70,16 @@ def main_loop():
         if choice == 'q':
             break
 
+        i = 0
+        while i <= 2000:
+            _, frame = cap.read()
+            # Detections
+            image, gesture = analyst.analyse(frame)
+            if gesture is not None:
+                i += 1
+                image = addtext(lookup[gesture], image)
+            cv2.imshow('Rock Paper Scissor', image)
+            cv2.waitKey(10)
         # reset scores
         computer_score = 0
         player_score = 0
